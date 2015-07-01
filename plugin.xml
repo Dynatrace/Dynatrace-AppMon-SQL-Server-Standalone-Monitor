@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 6.1.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.dynatrace.diagnostics.plugin.SQLServerMonitor" name="SQL Server Monitor">
+    <information>
+      <category value="" />
+      <displayname value="%PLUGIN_CONFIG_NAME" />
+      <description value="Standalone plugin to monitor SQL Server Stats from PerfMon" />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+      <property key="translation" label="Counter Name Translation" type="boolean" description="Translation of Performance Counter names - this can be disabled if it causes any trouble" default="true" />
+      <property key="instance" label="Instance Name" type="string" description="Instance Name for the SQL Server to be monitored.  Leave blank for default or no instance" default="" multiline="false" />
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.diagnostics.plugin.SQLPerfPluginMonitor" name="SQL Server Monitor">
+    <plugin configid="com.dynatrace.diagnostics.plugin.SQLServerMonitor" class="com.dynatrace.diagnostics.plugin.SQLServerMonitor" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugin.SQLPerfPluginMonitor.metricgroup1" name="SQL Server Stats">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugin.SQLPerfPluginMonitor">
+      <!-- Access Methods -->
+      <metric name="Access: Page Splits/sec" unit="number" description="Number of page splits per second that occur as a result of overflowing index pages." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Access Methods" optional="false" />
+        <property key="counterName" value="Page Splits/sec" optional="false" />
+      </metric>
+      <metric name="Access: Full Scans/sec" unit="number" description="Number of unrestricted full scans. These can either be base table or full index scans." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Access Methods" optional="false" />
+        <property key="counterName" value="Full Scans/sec" optional="false" />
+      </metric>
+      <!-- SQL Statistics -->
+      <metric name="Stats: Batch Requests/sec" unit="number" description="Number of SQL batch requests received by server." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="SQL Statistics" optional="false" />
+        <property key="counterName" value="Batch Requests/sec" optional="false" />
+      </metric>
+      <metric name="Stats: SQL Compilations/sec" unit="number" description="Number of SQL compilations." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="SQL Statistics" optional="false" />
+        <property key="counterName" value="SQL Compilations/sec" optional="false" />
+      </metric>
+      <!-- Databases -->
+      <metric name="Database: Log Flushes/sec" unit="number" description="Number of log flushes." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Databases" optional="false" />
+        <property key="counterName" value="Log Flushes/sec" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <metric name="Database: Log Cache Hit Ration" unit="number" description="Percentage of log cache reads that were satisfied from the log cache." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Databases" optional="false" />
+        <property key="counterName" value="Log Cache Hit Ratio" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <!-- General Statistics -->
+      <metric name="Stats: User Connections" unit="number" description="Number of users connected to the system." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="General Statistics" optional="false" />
+        <property key="counterName" value="User Connections" optional="false" />
+      </metric>
+      <metric name="Stats: Transactions" unit="number" description="Number of transaction enlistments (local, dtc, and bound)." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="General Statistics" optional="false" />
+        <property key="counterName" value="Transactions" optional="false" />
+      </metric>
+      <!-- Locks -->
+      <metric name="Locks: Number of Deadlocks/sec" unit="number" description="Number of lock requests that resulted in a deadlock." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Locks" optional="false" />
+        <property key="counterName" value="Number of Deadlocks/sec" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <metric name="Locks: Requests/sec" unit="number" description="Number of new locks and lock conversions requested from the lock manager." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Locks" optional="false" />
+        <property key="counterName" value="Lock Requests/sec" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <metric name="Locks: Average Wait Time (ms)" unit="number" description="The average amount of wait time (milliseconds) for each lock request that resulted in a wait." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Locks" optional="false" />
+        <property key="counterName" value="Average Wait Time (ms)" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <!-- General Errors -->
+      <metric name="Errors: Errors/sec" unit="number" description="Number of errors/sec" defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="SQL Errors" optional="false" />
+        <property key="counterName" value="Errors/sec" optional="false" />
+        <property key="instanceName" value="_Total" optional="false" />
+      </metric>
+      <!-- Buffer Manager -->
+      <metric name="Buffer: Cache hit ration" unit="number" description="Percentage of pages that were found in the buffer pool without having to incur a read from disk." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Buffer cache hit ratio" optional="false" />
+      </metric>
+      <metric name="Buffer: Checkpoint pages/sec" unit="number" description="Number of pages flushed by checkpoint or other operations that require all dirty pages to be flushed." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Checkpoint pages/sec" optional="false" />
+      </metric>
+      <metric name="Buffer: Lazy writes/sec" unit="number" description="Number of buffers written by buffer manager's lazy writer." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Lazy writes/sec" optional="false" />
+      </metric>
+      <metric name="Buffer: Page life expectancy" unit="number" description="Number of seconds a page will stay in the buffer pool without references." defaultrate="none" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Page life expectancy" optional="false" />
+      </metric>
+      <metric name="Buffer: Page reads/sec" unit="number" description="Number of physical database page reads issued." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Page reads/sec" optional="false" />
+      </metric>
+      <metric name="Buffer: Page writes/sec" unit="number" description="Number of physical database page writes issued." defaultrate="sec" hidedisplayaggregation="sum count">
+        <property key="objectName" value="Buffer Manager" optional="false" />
+        <property key="counterName" value="Page writes/sec" optional="false" />
+      </metric>
+    </metricgroup>
+  </extension>
+</plugin>
+

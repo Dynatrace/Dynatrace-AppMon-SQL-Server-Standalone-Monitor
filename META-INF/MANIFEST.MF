@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Require-Bundle: com.dynatrace.diagnostics.sdk
+Bundle-Vendor: Dynatrace Community
+Bundle-ClassPath: .,lib/com.dynatrace.diagnostics.sdk.jar,lib/org.ecli
+ pse.equinox.common_3.6.0.v20110523.jar
+Bundle-Version: 1.0.0
+Bundle-Name: SQL Server Monitor
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.dynatrace.diagnostics.plugin.SQLServerMonitor
+ ;singleton:=true
+
